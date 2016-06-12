@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BugShot - 设置</title>
+    <script src="js/require.js" data-main="js/options.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <style>
+      .setting {
+        margin-top: 64px;
+      }
+      .label {
+        color: #34495e;
+      }
+    </style>
+</head>
+
+<body>
+    <div id="setting" class="setting col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6">
+        <div class="panel panel-success">
+            <div class="panel-heading"><span>设置</span></div>
+            <div class="panel-body">
+                <form id="optionsForm" class="form-horizontal">
+                    <div id="options" class='ui-widget' title="BugShot options">
+                        <div class="form-group">
+                            <label class="label col-sm-3 control-label no-padding-right" for="Type">BUG跟踪系统:<strong class=red>*</em></label>
+                            <div class="col-sm-9">
+                                <select id="Type" class="required form-control" data-bind="value: Type" disabled="true">
+                                    <option value="Redmine" selected="selected">Redmine</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" data-bind="visible: UrlVisible">
+                            <label class="label col-sm-3 control-label no-padding-right" for="Url">Redmine地址:<strong class=red>*</em></label>
+                            <div class="col-sm-9 col-md-9">
+                              <input type="text" id="Url" class="required form-control" data-bind="value: Url">
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label class="label col-sm-3 control-label no-padding-right" for="Login">登录名:<strong class=red>*</em></label>
+                            <div class="col-sm-9 col-md-9">
+                              <input type="text" id="Login" class="required form-control" data-bind="value: Login">
+                            </div>
+                        </div>
+                        <div class="form-group"  data-bind="visible: PasswordVisible">
+                            <label class="label col-sm-3 control-label no-padding-right" for="Password">密码:<strong class=red>*</em></label>
+                            <div class="col-sm-9 col-md-9">
+                              <input type="password" id="Password" class="required form-control" data-bind="value: Password">
+                            </div>
+                        </div>
+                        <div class="form-group"  data-bind="visible: KeyVisible">
+                            <label class="label col-sm-3 control-label no-padding-right" for="Key">API Key:<strong class=red>*</em></label>
+                            <input type="text" id="Key" class="btn btn-primary required form-control" data-bind="value: Key">
+                        </div>
+                        <br>
+                        <div class="save col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6">
+                            <input id="saveBtn" title="Save options" class="btn btn-primary ui-button" data-bind="click: save" type="button" value="保存" />
+                            <span class="confirmationMessage"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
