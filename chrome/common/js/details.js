@@ -23,6 +23,7 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
             }
             this.ActiveTab = ko.observable('Create');
             this.init();
+            console.log(this);
         }
         DetailsViewModel.prototype.init = function () {
             var self = this;
@@ -59,7 +60,7 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
             });
             $("#issue_dialog").dialog(
                 {
-                    draggable: false,
+                    draggable: true,
                     autoOpen: false,
                     width: 500
                 }
@@ -68,24 +69,7 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
         DetailsViewModel.prototype.selectCreate = function () {
             this.ActiveTab('Create');
         };
-        DetailsViewModel.prototype.selectAttach = function () {
-            this.ActiveTab('Attach');
-        };
-        DetailsViewModel.prototype.send = function () {
-            if (this.AttachErrors().length > 0) {
-                this.AttachErrors.showAllMessages();
-                return;
-            }
-            var imageData = this.Parent.Editor.getImageData();
-            var self = this;
-            $("#issue_dialog").showLoading();
-            this.Communicator.comment(this.IssueId(), this.Comment(), this.Fields).then(function () {
-                return self.Communicator.attach(self.IssueId(), imageData, self.Fields);
-            }).done(function () {
-                $("#issue_dialog").hideLoading().dialog("close");
-                location.href = self.Communicator.getRedirectUrl(self.IssueId(), self.Fields);
-            });
-        };
+
         DetailsViewModel.prototype.createIssue = function () {
             if (this.CreateErrors().length > 0) {
                 this.CreateErrors.showAllMessages();
@@ -104,12 +88,23 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
                     return self.Communicator.attach(issueId, imageData, self.Fields);
                 }).done(function () {
                     $("#issue_dialog").hideLoading().dialog("close");
-                    location.href = self.Communicator.getRedirectUrl(issueId, self.Fields);
+                    // location.href = self.Communicator.getRedirectUrl(issueId, self.Fields);
                 });
         };
         DetailsViewModel.prototype.showDialog = function () {
             $("#issue_dialog").dialog("open");
             $('.ui-dialog-titlebar').hide();
+            // Drag anywhere
+            // new jBox('Modal', {
+            //     attach: $('#issue_dialog'),
+            //     width: 180,
+            //     height: 50,
+            //     title: 'jBox',
+            //     overlay: true,
+            //     createOnInit: true,
+            //     content: 'Drag me around by clicking anywhere',
+            //     draggable: true
+            // });
         };
         DetailsViewModel.prototype.closeDialog = function () {
             $("#issue_dialog").dialog("close");

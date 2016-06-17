@@ -17,6 +17,24 @@ define(['lib/jquery', 'comm/communicator', 'comm/fieldInfo'], function ($, Commu
                 });
             });
         };
+        RedmineCommunicator.prototype.loadTrackers = function () {
+            return this.ajax(this.Url() + 'trackers.json', {}, 'GET').then(function (data) {
+                console.dir(data);
+                return $.map(data.trackers, function (item) {
+                    console.log(item);
+                    return {Id: item.id, Name: item.name};
+                });
+            });
+        };
+        RedmineCommunicator.prototype.loadCategories = function () {
+            return this.ajax(this.Url() + 'projects/2/issue_categories.json', {}, 'GET').then(function (data) {
+                console.dir(data.issue_categories);
+                return $.map(data.issue_categories, function (item) {
+                    console.log(item);
+                    return {Id: item.id, Name: item.name};
+                });
+            });
+        };
         RedmineCommunicator.prototype.search = function (query) {
             return this.ajax(this.Url() + 'issues.json?subject=~' + query, {}, 'GET').then(function (data) {
                 return $.map(data.issues, function (item) {
@@ -26,18 +44,29 @@ define(['lib/jquery', 'comm/communicator', 'comm/fieldInfo'], function ($, Commu
         };
         RedmineCommunicator.prototype.getFields = function () {
             var fields = {
-                project: new FieldInfo({Caption: '选择项目:'})
+                // project: new FieldInfo({Caption: '选择项目:'}),
+                trackers: new FieldInfo({Caption: '问题类别:'}),
+                categories: new FieldInfo({Caption: '模块类别:'})
             };
-            this.loadProjects().done(function (data) {
-                fields.project.Options(data);
+            // this.loadProjects().done(function (data) {
+            //     fields.project.Options(data);
+            // });
+            this.loadTrackers().done(function (data) {
+                fields.trackers.Options(data);
+            });
+            this.loadCategories().done(function (data) {
+                fields.categories.Options(data);
             });
             return fields;
         };
         RedmineCommunicator.prototype.create = function (title, description, fields) {
             var data = {issue: {
-                project_id: fields.project.Value(),
+                project_id: 2,  // 此处写死项目id
+                tracker_id: fields.trackers.Value(),
                 subject: title,
-                description: description
+                description: description,
+                category_id: fields.categories.Value()
+
             }};
             return this.ajax(this.Url() + 'issues.json', data).then(function (data) {
                 return {Id: data.issue.id};

@@ -8,6 +8,7 @@
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/icons.css" />
     <link rel="stylesheet" type="text/css" href="css/editor.css" />
+    <link rel="stylesheet" type="text/css" href="css/jBox.css" />
 </head>
 
 <body>
@@ -15,9 +16,6 @@
         <!-- <ul class="tabContainer">
             <li class="tab" data-bind="css: {active: ActiveTab() == 'Create'}, click: selectCreate">
                 创建问题
-            </li>
-            <li class="tab" data-bind="css: {active: ActiveTab() == 'Attach'}, click: selectAttach">
-                附加截图
             </li>
         </ul> -->
         <div class="panel-heading">
@@ -29,37 +27,23 @@
 
         <div id="forms" class="panel-body">
             <div id="createForm" data-bind="visible: ActiveTab() == 'Create'">
-                <div class="control form-group">
-                    <label for="title" class="caption">标题:</label>
-                    <input id="title" class="editor form-control" data-bind="value: Title" />
-                </div>
-                <div class="control form-group">
-                    <label for="description" class="caption">描述:</label>
-                    <textarea id="description" class="editor form-control" rows="8" data-bind="value: Description"></textarea>
-                </div>
                 <!-- ko foreach: FieldsArr -->
                 <div class="control">
-                    <label data-bind="text: Caption" class="caption">Type:</label>
+                    <label data-bind="text: Caption" class="caption control-label">类别:</label>
                     <select class="editor form-control"
                       data-bind="options: Options, optionsText: 'Name', optionsValue: 'Id', value: Value">
                     </select>
                 </div>
                 <!-- /ko -->
+                <div class="control form-group">
+                    <label for="title" class="caption control-label">标题:</label>
+                    <input id="title" class="editor form-control" data-bind="value: Title" />
+                </div>
+                <div class="control form-group">
+                    <label for="description" class="caption control-label no-padding-right">描述:</label>
+                    <textarea id="description" class="editor form-control" rows="8" data-bind="value: Description"></textarea>
+                </div>
             </div>
-            <!-- <div id="attachForm" data-bind="visible: ActiveTab() == 'Attach'">
-                <div class="control">
-                    <label for="issue" class="caption">问题:</label>
-                    <input id="issue" class="editor" />
-                    <span class="validationMessage" data-bind="validationMessage: Issue"></span>
-                </div>
-                <div class="control">
-                    <label for="comment" class="caption">回复:</label>
-                    <textarea id="comment" class="editor" rows="10" data-bind="value: Comment"></textarea>
-                </div>
-                <div class="submit-div">
-                    <input class="ui-button right" data-bind="click: send" type="button" value="提交">
-                </div>
-            </div> -->
         </div>
         <div class="panel-footer">
           <div class="submit-div">
@@ -90,18 +74,15 @@
                 <i title="撤销编辑" class="button" data-bind="click: undo, event: { mouseover: hidePalette }">
                     <i class="icon-large icon-undo"></i>
                 </i>
-                <i class="separator"></i>
-                <i title="提交" class="button" data-bind="click: send">
-                    <i class="icon-large icon-ok"></i>
-                </i>
                 <i title="保存图片" class="button" data-bind="click: download, event: { mouseover: hideCopy }">
                     <i class="icon-large icon-save"></i>
                 </i>
-                <i id="copyButton" title="复制到剪贴板" class="button" data-bind="event: { mouseover: showCopy }">
-                    <i class="icon-large icon-copy"></i>
+                <i class="separator"></i>
+                <i title="提交" class="button" data-bind="click: send">
+                  <i class="icon-large icon-ok"></i>
                 </i>
                 <a id="download" download="问题描述截图.png" style="display: none">下载链接已准备</a>
-                <i title="关于我们" class="button" data-bind="click: about, event: { mouseover: hideCopy }">
+                <i title="关于我们" class="button right" data-bind="click: about, event: { mouseover: hideCopy }">
                     <i class="icon-large icon-about"></i>
                 </i>
                 <i title="Options" class="button right" data-bind="click: showOptionsPage">
@@ -118,22 +99,15 @@
                     <!-- /ko -->
                 </div>
             </div>
-            <div style="display: none" id="copy" data-bind="visible: CopyVisible(), event: { mouseover: showCopy, mouseout: hideCopy }, style: {left : CopyOffset() + 'px'}">
-                <div class="popup-arrow"></div>
-                <div class="popup">
-                    <img data-bind="attr: {src: CopyImage}" width="100px" height="100px">
-                    <br> 右键 - 复制图片
-                </div>
-            </div>
         </div>
         <canvas id="canvas"></canvas>
         <canvas id="output"></canvas>
         <div data-bind="event: {mousedown: editorDown}" id="editor"></div>
         <textarea id="texted" style="display: none" data-bind="value: ActiveText, valueUpdate: 'afterkeydown'"></textarea>
     </div>
-    <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/lib/jBox.min.js"></script>
 </body>
 
 </html>
