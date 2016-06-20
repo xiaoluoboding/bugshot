@@ -12,19 +12,7 @@
 </head>
 
 <body>
-    <div id="issue_dialog" class="panel panel-info" data-bind="with: Details">
-        <!-- <ul class="tabContainer">
-            <li class="tab" data-bind="css: {active: ActiveTab() == 'Create'}, click: selectCreate">
-                创建问题
-            </li>
-        </ul> -->
-        <div class="panel-heading">
-            <span>创建问题</span>
-            <div class="close-cont pull-right">
-                <span class="close" data-bind="click: closeDialog">x</span>
-            </div>
-        </div>
-
+    <div id="issue_dialog" data-bind="with: Details">
         <div id="forms" class="panel-body">
             <div id="createForm" data-bind="visible: ActiveTab() == 'Create'">
                 <!-- ko foreach: FieldsArr -->
@@ -41,7 +29,7 @@
                 </div>
                 <div class="control form-group">
                     <label for="description" class="caption control-label no-padding-right">描述:</label>
-                    <textarea id="description" class="editor form-control" rows="8" data-bind="value: Description"></textarea>
+                    <textarea id="description" class="editor form-control" rows="4" data-bind="value: Description"></textarea>
                 </div>
             </div>
         </div>

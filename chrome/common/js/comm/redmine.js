@@ -19,18 +19,18 @@ define(['lib/jquery', 'comm/communicator', 'comm/fieldInfo'], function ($, Commu
         };
         RedmineCommunicator.prototype.loadTrackers = function () {
             return this.ajax(this.Url() + 'trackers.json', {}, 'GET').then(function (data) {
-                console.dir(data);
+                // console.dir(data);
                 return $.map(data.trackers, function (item) {
-                    console.log(item);
+                    // console.log(item);
                     return {Id: item.id, Name: item.name};
                 });
             });
         };
         RedmineCommunicator.prototype.loadCategories = function () {
             return this.ajax(this.Url() + 'projects/2/issue_categories.json', {}, 'GET').then(function (data) {
-                console.dir(data.issue_categories);
+                // console.dir(data.issue_categories);
                 return $.map(data.issue_categories, function (item) {
-                    console.log(item);
+                    // console.log(item);
                     return {Id: item.id, Name: item.name};
                 });
             });

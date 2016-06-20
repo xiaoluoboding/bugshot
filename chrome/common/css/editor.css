@@ -195,3 +195,13 @@ rect:hover, path:hover, text:hover {
     float: right;
     padding: 5px;
 }
+
+.ui-button {
+    margin-top: -8px;
+}
+.panel-heading {
+    padding: 15px;
+}
+.panel-footer {
+    padding: 5px 15px;
+}

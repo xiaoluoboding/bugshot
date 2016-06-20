@@ -23,7 +23,6 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
             }
             this.ActiveTab = ko.observable('Create');
             this.init();
-            console.log(this);
         }
         DetailsViewModel.prototype.init = function () {
             var self = this;
@@ -88,23 +87,25 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
                     return self.Communicator.attach(issueId, imageData, self.Fields);
                 }).done(function () {
                     $("#issue_dialog").hideLoading().dialog("close");
+                    new jBox('Notice', {
+                        content: '^_^问题已经提交!',
+                        autoClose: 1800,
+                        color: 'green'
+                    });
                     // location.href = self.Communicator.getRedirectUrl(issueId, self.Fields);
                 });
         };
         DetailsViewModel.prototype.showDialog = function () {
             $("#issue_dialog").dialog("open");
-            $('.ui-dialog-titlebar').hide();
-            // Drag anywhere
-            // new jBox('Modal', {
-            //     attach: $('#issue_dialog'),
-            //     width: 180,
-            //     height: 50,
-            //     title: 'jBox',
-            //     overlay: true,
-            //     createOnInit: true,
-            //     content: 'Drag me around by clicking anywhere',
-            //     draggable: true
-            // });
+            $('.ui-dialog').addClass('panel panel-info');
+            var titlebar = $('.ui-dialog-titlebar');
+            if (!titlebar.hasClass('panel-heading')) {
+                titlebar.addClass('panel-heading');
+                $('.ui-button').attr('title', '关闭').addClass('btn btn-link pull-right');
+                $('.ui-dialog-titlebar').append('<span>创建问题</span>')
+                $('.ui-button-text').html('X');
+            }
+            
         };
         DetailsViewModel.prototype.closeDialog = function () {
             $("#issue_dialog").dialog("close");
