@@ -124,9 +124,9 @@ define(['lib/jquery', 'comm/communicator', 'comm/fieldInfo'], function ($, Commu
                         }
                     } else {
                         if(!xhr.statusText || xhr.statusText == 'timeout' || xhr.statusText == "Not Found") {
-                            deferred.reject('Unable to connect to Redmine at specified URL.');
+                            deferred.reject('网络连接错误，无法连接到Redmine!');
                         } else {
-                            deferred.reject('Unable to login using supplied credentials.');
+                            deferred.reject('系统繁忙，请稍后再试！');
                         }
                     }
                 }
