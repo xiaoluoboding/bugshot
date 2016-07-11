@@ -7,6 +7,8 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
             this.Comment = ko.observable().extend({required: true});
             this.Title = ko.observable().extend({required: true});
             this.Description = ko.observable().extend({required: true});
+            this.Username = ko.observable(localStorage['Username'] || '').extend({required: true});
+            this.Phone = ko.observable(localStorage['Phone'] || '').extend({required: true});
             this.Issue = ko.observable().extend({required: true});
             this.IssueId = ko.computed(function () {
                 var issue = this.Issue();
@@ -78,10 +80,14 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
             var self = this;
             $("#issue_dialog").showLoading();
             var issueId = null;
+            localStorage.setItem('Username', this.Username());
+            localStorage.setItem('Phone', this.Phone());
             this.Communicator.create(
                     this.Title(),
                     this.Description(),
-                    this.Fields
+                    this.Fields,
+                    this.Username(),
+                    this.Phone()
                 ).then(function (data) {
                     issueId = data.Id;
                     return self.Communicator.attach(issueId, imageData, self.Fields);
@@ -105,7 +111,7 @@ define(['lib/jquery', 'lib/knockout', 'lib/knockout.validation', 'comm', 'lib/jq
                 $('.ui-dialog-titlebar').append('<span>创建问题</span>')
                 $('.ui-button-text').html('X');
             }
-            
+
         };
         DetailsViewModel.prototype.closeDialog = function () {
             $("#issue_dialog").dialog("close");

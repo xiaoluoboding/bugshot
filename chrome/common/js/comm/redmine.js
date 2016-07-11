@@ -59,14 +59,13 @@ define(['lib/jquery', 'comm/communicator', 'comm/fieldInfo'], function ($, Commu
             });
             return fields;
         };
-        RedmineCommunicator.prototype.create = function (title, description, fields) {
+        RedmineCommunicator.prototype.create = function (title, description, fields, username, phone) {
             var data = {issue: {
                 project_id: 2,  // 此处写死项目id
                 tracker_id: fields.trackers.Value(),
                 subject: title,
-                description: description,
+                description: username + "提出: " + description + "  联系方式:" +phone,
                 category_id: fields.categories.Value()
-
             }};
             return this.ajax(this.Url() + 'issues.json', data).then(function (data) {
                 return {Id: data.issue.id};
